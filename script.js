@@ -1,34 +1,16 @@
-// геттер сеттер __proto__
-// const a= {
-//     print:()=>{console.log('hello');}
+
+// Object.create(obj) створює обєкт який буде зсилатися на obj
+
+// const person={
+//     isHuman:true,
+//     print:function(){
+//         console.log(`My name is ${this.name}. Am i human ${this.isHuman}`);
+//     }
 // }
-// const b1={}
+// const me=Object.create(person)
 
-// b1.__proto__=a
+// me.name='haha'
 
-// b1.print()
+// me.print()
 
-// це є те що лежить в [[Prototype]] тобто методи що беруться звідти
-// __proto__ - це доступ до обєкта прототипа
-// prototype - обєкт з наслідуваними методами 
-// прототипи не можуть бути циклічними
-// console.log(Object.prototype);
-
-// чому виведеться native code?
-// console.log(Object.__proto__); 
-
-// function create(p1,p2) {
-//     this.p1=p1
-//     this.p2=p2
-
-    
-// }
-
-// let a=new create('a','b')
-// console.log(a);
-// console.log(a.__proto__);
-// // a.s() буде помилка
-
-// create.prototype.s=()=>{console.log('eeee');}
-// a.s()
-// console.log(a.__proto__);
+// різниця між Object.create() i Object.setPrototypeOf() в тому що Object.create() створює новий обєкт 
