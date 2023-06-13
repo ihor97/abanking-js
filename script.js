@@ -1,19 +1,14 @@
-// однопоточність js  проявляється в тому що у нас є один стек
+// js працює завжди в якомусь оточенні що дає нам свій функціонал
+console.log("hi");
 
-function multiply(a,b) {
-    return a*b
-}
-function square(n) {
-    return multiply(n,n)
-}
-function printSquare(n) {
-    const squared= square(n)
-    console.log(squared);
-}
-printSquare(4)
+// цей таймаут виконується і пропадає зі стека а потім в стек закидується лог з таймаута
+// setTimeout йде в web api
+// event loop  констркуція яка дивиться що є в web api
+setTimeout(() => {
+    console.log("Timeout");
+}, 1000);
 
-//так ф-ї нагромаджуються
-//  -> multiply 
-//   ->square 
-//  printSquare 
-// в консолі розробника коли відбувається помилка друкується весь стек
+// callback queue чекає поки в call stack виконається весь код і тільки тоді викидує  колбеки
+// стек противоположне до черги 
+// черга - перший прийщов перший вийшов
+console.log("bye");
