@@ -1,48 +1,41 @@
-// new Promise((res,rej)=>{
-//     // async work
-//     res(12)
-//     rej(new Error(''))
-// }).then((val)=>{
-//     // тут можна викликати нові проміси
-//     return Promise.resolve(111)
-// }).then(
-//     val=>{
-//         console.log(val);
-//     }
-// ).catch(
-//     err=>{
-//         console.log(err);
-//     }
-// )
+// setTimeout(() => {
+//     console.log('After 1000ms');
+//     setTimeout(() => {
+//         console.log('After 2000ms');
+//         setTimeout(() => {
+//             console.log('After 3000ms');
+//         }, 1000);
+//     }, 1000);
+// }, 1000);
 
-/*
-state -pending -іде асинхронна дія,fullfiled,rejected
-
-
-в промісі є ше поле result - результат проміса
-
-*/ 
-function func(time,data) {
-    
-        return new Promise((res,rej)=>{
-
-            setTimeout(() => {
-                // rej('eeee')
-                res(data)
-            }, time*1000);
-        })
-    }
-
-func(3,'eeeede').then(val=>{
-
-    console.log(val);
-    // в then можна передати другим параметром колбек який буде ловити помилки
-},err=>{
-    console.log('error');
+// це те саме що зверху але через проміси 
+// проміс виконується раз а колбеки не факт
+const customSetTimeout = n => {
+    return new Promise((res, rej) => {
+        setTimeout(() => {
+            res(n)
+        }, 1000);
+    })
 }
-).catch(
-    err=>{
-        console.log(err);
-    }
-)
 
+customSetTimeout(1000)
+    .then((val) => {
+        console.log('After ' + val)
+
+        return customSetTimeout(2000)
+    })
+    .then(val => {
+        console.log('After ' + val)
+        // можна вертати проміси
+        return customSetTimeout(3000)
+    })
+    // кастомно можна обробляти помилку
+    .catch(err => {
+        console.log(err);
+    })
+    .then(val => {
+        console.log('After ' + val)
+    })
+    .catch(err => {
+        console.log(err);
+    })
