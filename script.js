@@ -1,43 +1,48 @@
-// робить запрос на сервер
-// якщо ф-я асинхронна колбек передається останнім аргументром
-function getuserData(id, cb) {
-    fetch(id)
-    // логіка якась
-    // cb(new Error()) якщо помилка
-
-    // якщо все ок
-    cb(null, {})
-}
-// спочатку передаємо помилку в колбек
-getuserData('id', (err, result) => {
-    if (err) {
-        // обробка
-        err.message
-    }
-
-
-})
+// new Promise((res,rej)=>{
+//     // async work
+//     res(12)
+//     rej(new Error(''))
+// }).then((val)=>{
+//     // тут можна викликати нові проміси
+//     return Promise.resolve(111)
+// }).then(
+//     val=>{
+//         console.log(val);
+//     }
+// ).catch(
+//     err=>{
+//         console.log(err);
+//     }
+// )
 
 /*
-мінуси
--вложеність
--лишній код
--не зрозуміло чи то асинхронна дія чи ні тобто не можна зрозуміти в якій послідовності буде виконуватися код
-проблема довіри - ми передаємо контроль над кодом комусь - тому що хтось може виконати ф-ю пізніше раніще або не виконати
+state -pending -іде асинхронна дія,fullfiled,rejected
 
-*/
-// колбек хелл
-getuserData((err, result) => {
-    if (err) { throw err }
-    getFriendsById(result.id, (err, result) => {
-        if (err) {
-            throw err;
-        }
-        getPhotos(result[0].id, (err, result) => {
-            if (err) {
-                throw err
-            }
-            //.....
+
+в промісі є ше поле result - результат проміса
+
+*/ 
+function func(time,data) {
+    
+        return new Promise((res,rej)=>{
+
+            setTimeout(() => {
+                // rej('eeee')
+                res(data)
+            }, time*1000);
         })
-    })
-})
+    }
+
+func(3,'eeeede').then(val=>{
+
+    console.log(val);
+    // в then можна передати другим параметром колбек який буде ловити помилки
+},err=>{
+    console.log('error');
+}
+).catch(
+    err=>{
+        console.log(err);
+    }
+)
+
