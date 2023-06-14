@@ -1,27 +1,39 @@
-const getRandomInt = max => {
-    return Math.floor(Math.random() * max)
-}
+// fetch('http://127.0.0.1:5500/index.html')
+// .then(x=>{console.log(x);})
 
-const promiseTimer = (n, data) => {
-    return new Promise((res, rej) => {
+////можна юзати статичний метод для того щоб почати ланцюжок промісів
+// Promise.resolve(true)
+//     .then(() => fetch('http://127.0.0.1:5500/index.html'))
+//     .then((res)=>{console.log(res);})
+
+
+const getRandomInt=max=>{
+    return Math.floor(Math.random()*max)
+}
+const getData=()=>{
+    return new Promise((res,rej)=>{
         setTimeout(() => {
-            if (getRandomInt(3) === 0) {
-                rej(new Error('something went wrong'))
-            }
-            res(data)
-        }, n * 1000);
+            res(getRandomInt(10))
+        }, 1000*getRandomInt(10));
     })
 }
-promiseTimer(1,'dsxdsds')
-.then(data=>{
-    console.log(data);
+// коли в хоть одному є помилка то всі рещта даних втрачаються
+// Promise.all([getData(),getData(),getData()])
+//     .then(arr=>{
+//         console.log(arr);
+//     })
+//     .catch(err=>{console.log(err);})
 
-}
-// якщо все гут rej просто не викликається
-,err=>{
-    console.log(err);
-})
-// викликається в любому випадку
-.finally(()=>{
-    console.log('finally');
-})
+// резолвить найшвидший проміс (наприклад коли тянемо інфу з датацентрів)
+// Promise.race([getData(),getData(),getData()])
+//     .then(arr=>{
+//         console.log(arr);
+//     })
+//     .catch(err=>{console.log(err);})
+
+// викидує обєкти з ключами status(або reason) і value , при тому якщо буде помилка ми не будемо валитися в catch 
+Promise.allSettled([getData(),getData(),getData()])
+    .then(arr=>{
+        console.log(arr);
+    })
+    .catch(err=>{console.log(err);})
