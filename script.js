@@ -1,41 +1,27 @@
-// setTimeout(() => {
-//     console.log('After 1000ms');
-//     setTimeout(() => {
-//         console.log('After 2000ms');
-//         setTimeout(() => {
-//             console.log('After 3000ms');
-//         }, 1000);
-//     }, 1000);
-// }, 1000);
-
-// це те саме що зверху але через проміси 
-// проміс виконується раз а колбеки не факт
-const customSetTimeout = n => {
-    return new Promise((res, rej) => {
-        setTimeout(() => {
-            res(n)
-        }, 1000);
-    })
+const getRandomInt = max => {
+    return Math.floor(Math.random() * max)
 }
 
-customSetTimeout(1000)
-    .then((val) => {
-        console.log('After ' + val)
+const promiseTimer = (n, data) => {
+    return new Promise((res, rej) => {
+        setTimeout(() => {
+            if (getRandomInt(3) === 0) {
+                rej(new Error('something went wrong'))
+            }
+            res(data)
+        }, n * 1000);
+    })
+}
+promiseTimer(1,'dsxdsds')
+.then(data=>{
+    console.log(data);
 
-        return customSetTimeout(2000)
-    })
-    .then(val => {
-        console.log('After ' + val)
-        // можна вертати проміси
-        return customSetTimeout(3000)
-    })
-    // кастомно можна обробляти помилку
-    .catch(err => {
-        console.log(err);
-    })
-    .then(val => {
-        console.log('After ' + val)
-    })
-    .catch(err => {
-        console.log(err);
-    })
+}
+// якщо все гут rej просто не викликається
+,err=>{
+    console.log(err);
+})
+// викликається в любому випадку
+.finally(()=>{
+    console.log('finally');
+})
