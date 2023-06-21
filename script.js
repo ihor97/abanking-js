@@ -1,39 +1,18 @@
-// fetch('http://127.0.0.1:5500/index.html')
-// .then(x=>{console.log(x);})
-
-////можна юзати статичний метод для того щоб почати ланцюжок промісів
-// Promise.resolve(true)
-//     .then(() => fetch('http://127.0.0.1:5500/index.html'))
-//     .then((res)=>{console.log(res);})
-
-
-const getRandomInt=max=>{
-    return Math.floor(Math.random()*max)
+function identify() {
+    // this визначається тим де ми викликаємо ф-ю
+    return this.name.toUpperCase()
 }
-const getData=()=>{
-    return new Promise((res,rej)=>{
-        setTimeout(() => {
-            res(getRandomInt(10))
-        }, 1000*getRandomInt(10));
-    })
+function speak() {
+    // ще треба прибити контекст і всередині
+    const greeting="hello i am " +identify.call(this)
+    console.log(greeting);
 }
-// коли в хоть одному є помилка то всі рещта даних втрачаються
-// Promise.all([getData(),getData(),getData()])
-//     .then(arr=>{
-//         console.log(arr);
-//     })
-//     .catch(err=>{console.log(err);})
-
-// резолвить найшвидший проміс (наприклад коли тянемо інфу з датацентрів)
-// Promise.race([getData(),getData(),getData()])
-//     .then(arr=>{
-//         console.log(arr);
-//     })
-//     .catch(err=>{console.log(err);})
-
-// викидує обєкти з ключами status(або reason) і value , при тому якщо буде помилка ми не будемо валитися в catch 
-Promise.allSettled([getData(),getData(),getData()])
-    .then(arr=>{
-        console.log(arr);
-    })
-    .catch(err=>{console.log(err);})
+const me={
+    name:'teacher'
+}
+const you={
+    name:'student'
+}
+// контекст - обєкт до якого ми можемо звернутися в ф-ї
+speak.call(me)
+speak.call(you)
