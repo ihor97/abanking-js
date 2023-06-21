@@ -1,18 +1,20 @@
-function identify() {
-    // this визначається тим де ми викликаємо ф-ю
-    return this.name.toUpperCase()
+function baz() {
+    // такими ланцюжками визначається контекст виклику
+    // стек викликів global-> baz
+    // відповідно місце виклику належить глобальній області видимості
+    console.log('baz');
+    bar()
 }
-function speak() {
-    // ще треба прибити контекст і всередині
-    const greeting="hello i am " +identify.call(this)
-    console.log(greeting);
+function bar() {
+    // стек викликів: 'global'->'baz'->'bar'
+    // відповідно місце виклику знаходиться в baz
+    console.log('bar');
+    foo()
 }
-const me={
-    name:'teacher'
+function foo() {
+    // стек викликів: 'global'->'baz'->'bar->foo'
+    // відповідно місце виклику знаходиться в bar
+    console.log('foo');
 }
-const you={
-    name:'student'
-}
-// контекст - обєкт до якого ми можемо звернутися в ф-ї
-speak.call(me)
-speak.call(you)
+
+baz()
