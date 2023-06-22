@@ -7,35 +7,9 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Life</title>
 
-<script>
   
 
-class Handler{
-    constructor(){
-        this.counter=0
-    }
-    handleClick(){
 
-        // setTimeout(() => {
-          // коли ми використовуємо стрілку this буде рівний нашому обєкту
-          // стрілці не важливо де вона викликається їй важливо звідки вона викликається відносно батька
-          // не можна переоприділити this в стрілці
-        //   console.log(this);
-        //     this.counter++
-        //     console.log(this.counter);
-        // }, 10);
-
-
-        setTimeout(function () {
-          // силка на цю ф-ю передається комусь і ми не знамо чому буде рівний потім this
-          console.log(this);
-            this.counter++
-            console.log(this.counter);
-        }, 10);
-    }
-}
-const handled=new Handler()
-</script>
 
 
 
@@ -45,7 +19,6 @@ const handled=new Handler()
 
 <body>
 
-<button onclick="handled.handleClick()">click</button>
 
 
 
