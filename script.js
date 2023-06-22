@@ -1,39 +1,8 @@
-// явне звязування call apply 
-// bind жорстке
-// function foo(smt) {
-//     console.log(this.a, smt);
-//     return this.a + smt
-// }
-// const obj={
-//     a:2
-// }
-// // прибиває контекст
-// const bar=foo.bind(obj)
-// // bind біндиться тільки один раз так що контекст не поміняється(не можна перебіндити)
-// const bar2=bar.bind({a:200})
-// console.log(bar(4));
+function foo() {
+    console.log(this);
+}
+// якшо ми вставимо null або undefined то ми оотримаємо в консоль Window
+// foo.call(undefined)
 
-// часткове застосування 
-
-// function foo(smt,another) {
-//     console.log(this.a, smt,another);
-//     return this.a + smt
-// }
-// const obj={
-//     a:2
-// }
-
-// // тобто ми біндінгом назавжди забили в перший параметр ф-ї значення 10
-// // типу lazy ф-я
-// const bar=foo.bind(obj,10)
-// bar(20)
-
-
-
-// типу як замикання
-// function counter(a,b) {
-//     console.log(a+b);
-// }
-// // в пергий параметр назавжди забили 5
-// const somethingPlusFive=counter.bind({},5)
-// somethingPlusFive(543)
+// щоб не було такого щоб коли ми передавали null undefined в call і нам вибивав window треба зробити наступне
+foo.call(Object.create(null))
