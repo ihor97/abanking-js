@@ -1,39 +1,39 @@
-//1-----------------------
-// звязування по замовчуванню - або до обєкта window або до  undefined
-// в use strict буде undefined
-// function foo() {
-//     console.log(this);
-// }
-
-//2------------------------
-
-// неявне звязування
-
-// function foo() {
-//     console.log(this.a);
-// }
-
-// const obj={
-//     a:2,
-//     foo:foo
-// }
-// obj.foo()
-
-
-// приклад 2
-// атомарний виклик ф-ї тоді коли вона викликається без власника
-// function foo() {
-//     console.log(this.a);
-// }
-// function doFoo(fn) {
-    // тут буде знову просто силка АБО  window.fn()
-//     fn()
+// явне звязування call apply 
+// bind жорстке
+// function foo(smt) {
+//     console.log(this.a, smt);
+//     return this.a + smt
 // }
 // const obj={
-//     a:2,
-//     foo:foo
+//     a:2
 // }
-// // undefined буде
-// doFoo(obj.foo)
-//3-----------------------------
+// // прибиває контекст
+// const bar=foo.bind(obj)
+// // bind біндиться тільки один раз так що контекст не поміняється(не можна перебіндити)
+// const bar2=bar.bind({a:200})
+// console.log(bar(4));
 
+// часткове застосування 
+
+// function foo(smt,another) {
+//     console.log(this.a, smt,another);
+//     return this.a + smt
+// }
+// const obj={
+//     a:2
+// }
+
+// // тобто ми біндінгом назавжди забили в перший параметр ф-ї значення 10
+// // типу lazy ф-я
+// const bar=foo.bind(obj,10)
+// bar(20)
+
+
+
+// типу як замикання
+// function counter(a,b) {
+//     console.log(a+b);
+// }
+// // в пергий параметр назавжди забили 5
+// const somethingPlusFive=counter.bind({},5)
+// somethingPlusFive(543)
