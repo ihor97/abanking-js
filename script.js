@@ -1,20 +1,39 @@
-function baz() {
-    // такими ланцюжками визначається контекст виклику
-    // стек викликів global-> baz
-    // відповідно місце виклику належить глобальній області видимості
-    console.log('baz');
-    bar()
-}
-function bar() {
-    // стек викликів: 'global'->'baz'->'bar'
-    // відповідно місце виклику знаходиться в baz
-    console.log('bar');
-    foo()
-}
-function foo() {
-    // стек викликів: 'global'->'baz'->'bar->foo'
-    // відповідно місце виклику знаходиться в bar
-    console.log('foo');
-}
+//1-----------------------
+// звязування по замовчуванню - або до обєкта window або до  undefined
+// в use strict буде undefined
+// function foo() {
+//     console.log(this);
+// }
 
-baz()
+//2------------------------
+
+// неявне звязування
+
+// function foo() {
+//     console.log(this.a);
+// }
+
+// const obj={
+//     a:2,
+//     foo:foo
+// }
+// obj.foo()
+
+
+// приклад 2
+// атомарний виклик ф-ї тоді коли вона викликається без власника
+// function foo() {
+//     console.log(this.a);
+// }
+// function doFoo(fn) {
+    // тут буде знову просто силка АБО  window.fn()
+//     fn()
+// }
+// const obj={
+//     a:2,
+//     foo:foo
+// }
+// // undefined буде
+// doFoo(obj.foo)
+//3-----------------------------
+
