@@ -1,11 +1,23 @@
-// звязування new
+// стрілкова ф-я
 
-function foo(a) {
-    // 1.конструюється новий обєкт 
-    // 2 в __proto__ цього нового обєкта присвоюється foo.prototype
-    // this ф=ї ссилається на новий обєкт this= новий обєкт
-    this.a=a
+function foo() {
+    return ()=>{
+        console.log(this.a);
+    }
+    // return function () {
+        // в такому разі буде виводити 3
+    //     console.log(this.a);
+        
+    // }
+    
 }
-const bar=new foo(2)
 
-console.log(bar);
+const obj1={
+    a:2
+}
+const obj2={
+    a:3
+}
+const bar=foo.call(obj1)
+// так як стрілка бере контекст батька то ми візьмемо дані з obj1
+bar.call(obj2)
