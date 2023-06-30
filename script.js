@@ -1,47 +1,15 @@
-// forof працює так : js бере iterator після слова of і викликає метод next() і віддає value 
-// for (const x of iterator) {
-//     console.log(x);
-// }
-
-// iterator i iterable 
-// iterable - обєкт який має в собі дані по яких можна ітеруватися
-
-// function *generator(num) {
-//     for (let i = 1; i <= num; i++) {
-//         yield i
-//     }
-// }
-
-// let iterator=generator(15)
-// console.log(iterator);
-// for (const x of iterator) {
-//     console.log(x);
-// }
-
-function gen(start,condition) {
-    let val =start
-// тут всеодно замикання і без функції
-        return {
-            
-            next(){
-                return {
-                    value:val>condition.less ? --val : undefined,
-                    done:!val>condition.less
-                }
-            }
-        }
-   
+function *foo(x) {
+    // yield може як приймати так і віддавати
+    const y=x *(yield 'please input number')
+    return y
 }
+// це можна заюзати якщо у нас є якісь тяжкі обчислення і нам треба дочекатися значення якогось яке прийде пізніше
+// так що ф-я може зупинитися на якомусь моменті і чекати введення цього значення
+const iterator=foo(5)
+// iterator.next()
+console.log(iterator.next());
 
-let condition={less:3}
-let iterator=gen(6,condition)
-console.log(iterator.next());
-console.log(iterator.next());
-// тут ми можемо поставити умову і керувати нашим кодом так щоб він дальше продовжував виконуватися
-// так як все у нас синхронно то в циклі все б проітерувалося і щоб якось повпливати на це нам би треба було ставити if  щоб змінити умову
-// тобто можна влізти під час виконання коду і щось змінити
-condition.less=0
-console.log(iterator.next());
-console.log(iterator.next());
-console.log(iterator.next());
-console.log(iterator.next());
+// ми тут кажемо замість yield підставити 2
+console.log(iterator.next(2));
+// console.log(iterator.next());
+
